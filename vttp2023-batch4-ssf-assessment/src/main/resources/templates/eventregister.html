@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Event Registration</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <form method="POST" 
+            th:object="${user}"
+        >
+            <h2>Event Registration Form</h2>
+            <p>You have chosen to register for the following event:</p>
+            <span th:each="event : ${wrapper.eventList}">
+                <span th:if="${event.eventId == eventId}">
+                    <h3 th:text="${event.eventName}"></h3>
+                    <h3 th:text="${#dates.format(event.eventDate, 'dd-MM-yyyy')}"></h3>
+                    <input type="hidden" th:value="${event.eventId}" th:field="*{eventId}" />
+                </span>
+            </span>
+            <div class="form-group">
+                <label for="fullName">Full Name:</label>
+                <input type="text" class="form-control" id="fullName" name="fullName" th:field="*{fullName}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></small>
+            </div>
+            <div class="form-group">
+                <label for="dob">DOB:</label>
+                <input type="date" class="form-control" id="dob" name="dob" th:field="*{birthDate}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></small>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" th:field="*{email}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+            </div>
+            <div class="form-group">
+                <label for="mobileNo">Mobile No:</label>
+                <input type="text" class="form-control" id="mobileNo" name="mobileNo" th:field="*{phoneNo}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('phoneNo')}" th:errors="*{phoneNo}"></small>
+            </div>
+            <div class="form-group">
+                <label for="tickets">Tickets:</label>
+                <input type="text" class="form-control" id="tickets" name="tickets" th:field="*{tickets}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('tickets')}" th:errors="*{tickets}"></small>
+            </div>
+            <button type="submit" class="btn btn-primary" th:action="@{events/listing}">Register</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
